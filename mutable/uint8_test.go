@@ -1,0 +1,48 @@
+package mutable
+
+import (
+	"testing"
+
+	"github.com/serg1122/optional"
+	"github.com/stretchr/testify/assert"
+)
+
+func TestOptionalUint8_Create(t *testing.T) {
+	opUint8 := OptionalUint8Create()
+	assert.IsType(t, opUint8, &OptionalUint8{})
+}
+
+func TestOptionalUint8_IsPresent(t *testing.T) {
+	opUint8 := OptionalUint8Create()
+	assert.False(t, opUint8.IsPresent())
+	opUint8.ValueSet(uint8(1))
+	assert.True(t, opUint8.IsPresent())
+}
+
+func TestOptionalUint8_Valueget(t *testing.T) {
+
+	opUint8 := OptionalUint8Create()
+
+	_, err1 := opUint8.ValueGet()
+	assert.IsType(t, err1, optional.ErrorValueIsNotPresentCreate())
+
+	valueExpected := uint8(2)
+	opUint8.ValueSet(valueExpected)
+	valueGot, err2 := opUint8.ValueGet()
+	assert.Equal(t, valueGot, valueExpected)
+	assert.Nil(t, err2)
+}
+
+func TestOptionalUint8_ValueSet(t *testing.T) {
+	opUint8 := OptionalUint8Create()
+
+	valueExpected := uint8(3)
+	opUint8.ValueSet(valueExpected)
+	valueGot1, _ := opUint8.ValueGet()
+	assert.Equal(t, valueGot1, valueExpected)
+
+	valueExpected2 := uint8(4)
+	opUint8.ValueSet(valueExpected2)
+	valueGot2, _ := opUint8.ValueGet()
+	assert.Equal(t, valueGot2, valueExpected2)
+}
