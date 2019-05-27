@@ -1,6 +1,7 @@
 package immutable
 
 import (
+	"encoding/json"
 	"testing"
 
 	"github.com/serg1122/optional"
@@ -41,4 +42,39 @@ func TestOptinalBool_ValueSet(t *testing.T) {
 	assert.IsType(t, err3, optional.ErrorValueIsPresentCreate())
 	valueGot2, _ := opBool.ValueGet()
 	assert.True(t, valueGot2)
+}
+
+func TestOptionalBool_MarshalJSON(t *testing.T) {
+	opBool := OptionalBoolCreate()
+
+	valueGot1, err1 := opBool.MarshalJSON()
+	assert.Equal(t, []byte("null"), valueGot1)
+	assert.Nil(t, err1)
+
+	valueExpexted := true
+	opBool.ValueSet(valueExpexted)
+	valueGot2, err2 := opBool.MarshalJSON()
+	assert.Equal(t, []byte("true"), valueGot2)
+	assert.Nil(t, err2)
+}
+
+func TestOptionalBool_UnmarshalJSON(t *testing.T) {
+	opBool := OptionalBoolCreate()
+
+	err0 := opBool.UnmarshalJSON([]byte("blah"))
+	assert.IsType(t, err0, &json.SyntaxError{})
+	assert.False(t, opBool.IsPresent())
+
+	err1 := opBool.UnmarshalJSON([]byte("null"))
+	assert.Nil(t, err1)
+	assert.False(t, opBool.IsPresent())
+
+	err2 := opBool.UnmarshalJSON([]byte("false"))
+	assert.Nil(t, err2)
+	valueGot, errorGot := opBool.ValueGet()
+	assert.False(t, valueGot)
+	assert.Nil(t, errorGot)
+
+	err3 := opBool.UnmarshalJSON([]byte("true"))
+	assert.IsType(t, err3, optional.ErrorValueIsPresentCreate())
 }
