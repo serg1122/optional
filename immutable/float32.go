@@ -38,6 +38,7 @@ func (o *OptionalFloat32) ValueSet(value float32) *optional.ErrorValueIsPresent 
 }
 
 func (o *OptionalFloat32) MarshalJSON() ([]byte, error) {
+
 	if o.IsPresent() {
 		return json.Marshal(o.value)
 	}
@@ -45,6 +46,7 @@ func (o *OptionalFloat32) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OptionalFloat32) UnmarshalJSON(data []byte) error {
+
 	if o.IsPresent() {
 		return optional.ErrorValueIsPresentCreate()
 	}
