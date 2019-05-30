@@ -1,6 +1,10 @@
 package immutable
 
-import "github.com/serg1122/optional"
+import (
+	"encoding/json"
+
+	"github.com/serg1122/optional"
+)
 
 type OptionalUint struct {
 	isPresent bool
@@ -30,5 +34,29 @@ func (o *OptionalUint) ValueSet(value uint) *optional.ErrorValueIsPresent {
 	}
 	o.value = value
 	o.isPresent = true
+	return nil
+}
+
+func (o *OptionalUint) MarshalJSON() ([]byte, error) {
+	if o.IsPresent() {
+		return json.Marshal(o.value)
+	}
+	return json.Marshal(nil)
+}
+
+func (o *OptionalUint) UnmarshalJSON(data []byte) error {
+	if o.IsPresent() {
+		return optional.ErrorValueIsPresentCreate()
+	}
+	if string(data) == "null" {
+		return nil
+	}
+	var value uint
+	if err1 := json.Unmarshal(data, &value); err1 != nil {
+		return err1
+	}
+	if err2 := o.ValueSet(value); err2 != nil {
+		return err2
+	}
 	return nil
 }

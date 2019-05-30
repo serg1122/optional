@@ -1,6 +1,7 @@
 package immutable
 
 import (
+	"encoding/json"
 	"testing"
 
 	"github.com/serg1122/optional"
@@ -40,5 +41,43 @@ func TestOptionalUint_ValueSet(t *testing.T) {
 	err2 := opUint.ValueSet(uint(4))
 	assert.IsType(t, err2, optional.ErrorValueIsPresentCreate())
 	valueGot2, _ := opUint.ValueGet()
+	assert.Equal(t, valueGot2, valueExpected)
+}
+
+func TestOptinalUint_MarshalJSON(t *testing.T) {
+	opUint := OptionalUintCreate()
+
+	valueGot1, err1 := opUint.MarshalJSON()
+	assert.Equal(t, []byte("null"), valueGot1)
+	assert.Nil(t, err1)
+
+	opUint.ValueSet(uint(5))
+	valueGot2, err2 := opUint.MarshalJSON()
+	assert.Equal(t, valueGot2, []byte("5"))
+	assert.Nil(t, err2)
+}
+
+func TestOptionalUint_UnmarshalJSON(t *testing.T) {
+	opUint := OptionalUintCreate()
+
+	err1 := opUint.UnmarshalJSON([]byte("qwe"))
+	assert.IsType(t, err1, &json.SyntaxError{})
+	assert.False(t, opUint.IsPresent())
+
+	err2 := opUint.UnmarshalJSON([]byte("null"))
+	assert.Nil(t, err2)
+	assert.False(t, opUint.IsPresent())
+
+	valueExpected := uint(6)
+
+	err3 := opUint.UnmarshalJSON([]byte("6"))
+	valueGot1, _ := opUint.ValueGet()
+	assert.True(t, opUint.IsPresent())
+	assert.Equal(t, valueGot1, valueExpected)
+	assert.Nil(t, err3)
+
+	err4 := opUint.UnmarshalJSON([]byte("6"))
+	valueGot2, _ := opUint.ValueGet()
+	assert.Equal(t, err4, optional.ErrorValueIsPresentCreate())
 	assert.Equal(t, valueGot2, valueExpected)
 }
