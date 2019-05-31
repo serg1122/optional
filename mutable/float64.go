@@ -1,6 +1,10 @@
 package mutable
 
-import "github.com/serg1122/optional"
+import (
+	"encoding/json"
+
+	"github.com/serg1122/optional"
+)
 
 type OptionalFloat64 struct {
 	isPresent bool
@@ -27,4 +31,23 @@ func (o *OptionalFloat64) ValueGet() (float64, *optional.ErrorValueIsNotPresent)
 func (o *OptionalFloat64) ValueSet(value float64) {
 	o.value = value
 	o.isPresent = true
+}
+
+func (o *OptionalFloat64) MarshalJSON() ([]byte, error) {
+	if o.IsPresent() {
+		return json.Marshal(o.value)
+	}
+	return json.Marshal(nil)
+}
+
+func (o *OptionalFloat64) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
+	var value float64
+	if err1 := json.Unmarshal(data, &value); err1 != nil {
+		return err1
+	}
+	o.ValueSet(value)
+	return nil
 }

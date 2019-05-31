@@ -1,6 +1,7 @@
 package mutable
 
 import (
+	"encoding/json"
 	"testing"
 
 	"github.com/serg1122/optional"
@@ -41,4 +42,41 @@ func TestOptionalFloat64_ValueSet(t *testing.T) {
 	opFloat64.ValueSet(valueExpected2)
 	valueGot2, _ := opFloat64.ValueGet()
 	assert.Equal(t, valueGot2, valueExpected2)
+}
+
+func TestOptionalFloat64_MarshalJSON(t *testing.T) {
+	opFloat64 := OptionalFloat64Create()
+
+	jsonValueGot1, jsonValueErr1 := opFloat64.MarshalJSON()
+	assert.Nil(t, jsonValueGot1)
+	assert.Equal(t, jsonValueErr1, []byte("null"))
+
+	opFloat64.ValueSet(float64(6.12))
+	jsonValueGot2, jsonValueErr2 := opFloat64.MarshalJSON()
+	assert.Equal(t, jsonValueGot2, []byte("6.12"))
+	assert.Nil(t, jsonValueErr2)
+}
+
+func TestOptionalFloat64_UnmarshalJSON(t *testing.T) {
+	opFloat64 := OptionalFloat64Create()
+
+	err1 := opFloat64.UnmarshalJSON([]byte("asd"))
+	assert.IsType(t, err1, &json.SyntaxError{})
+	assert.False(t, opFloat64.IsPresent())
+
+	err2 := opFloat64.UnmarshalJSON([]byte("null"))
+	assert.Nil(t, err2)
+	assert.False(t, opFloat64.IsPresent())
+
+	err3 := opFloat64.UnmarshalJSON([]byte("7.23"))
+	assert.Nil(t, err3)
+	assert.True(t, opFloat64.IsPresent())
+	valueGot1, _ := opFloat64.ValueGet()
+	assert.Equal(t, valueGot1, float64(7.23))
+
+	err4 := opFloat64.UnmarshalJSON([]byte("8.34"))
+	assert.Nil(t, err4)
+	assert.True(t, opFloat64.IsPresent())
+	valueGot2, _ := opFloat64.ValueGet()
+	assert.Equal(t, valueGot2, float64(8.34))
 }
