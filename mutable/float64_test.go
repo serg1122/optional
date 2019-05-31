@@ -48,8 +48,8 @@ func TestOptionalFloat64_MarshalJSON(t *testing.T) {
 	opFloat64 := OptionalFloat64Create()
 
 	jsonValueGot1, jsonValueErr1 := opFloat64.MarshalJSON()
-	assert.Nil(t, jsonValueGot1)
-	assert.Equal(t, jsonValueErr1, []byte("null"))
+	assert.Equal(t, jsonValueGot1, []byte("null"))
+	assert.Nil(t, jsonValueErr1)
 
 	opFloat64.ValueSet(float64(6.12))
 	jsonValueGot2, jsonValueErr2 := opFloat64.MarshalJSON()

@@ -41,7 +41,7 @@ func (o *OptionalBool) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OptionalBool) UnmarshalJSON(data []byte) error {
-	if string(data) == "nul" {
+	if string(data) == "null" {
 		return nil
 	}
 	var value bool
