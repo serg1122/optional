@@ -1,6 +1,10 @@
 package mutable
 
-import "github.com/serg1122/optional"
+import (
+	"encoding/json"
+
+	"github.com/serg1122/optional"
+)
 
 type OptionalBool struct {
 	isPresent bool
@@ -27,4 +31,23 @@ func (o *OptionalBool) ValueGet() (bool, *optional.ErrorValueIsNotPresent) {
 func (o *OptionalBool) ValueSet(value bool) {
 	o.value = value
 	o.isPresent = true
+}
+
+func (o *OptionalBool) MarshalJSON() ([]byte, error) {
+	if o.IsPresent() {
+		return json.Marshal(o.value)
+	}
+	return json.Marshal(nil)
+}
+
+func (o *OptionalBool) UnmarshalJSON(data []byte) error {
+	if string(data) == "nul" {
+		return nil
+	}
+	var value bool
+	if err1 := json.Unmarshal(data, &value); err1 != nil {
+		return err1
+	}
+	o.ValueSet(value)
+	return nil
 }
