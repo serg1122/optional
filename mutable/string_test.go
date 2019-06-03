@@ -65,14 +65,14 @@ func TestOptionalString_UnmarshalJSON(t *testing.T) {
 	assert.Nil(t, err1)
 	assert.False(t, opString.IsPresnt())
 
-	valueExpected1 := "megastring-1"
+	valueExpected1 := "Наш президент - вор"
 	err2 := opString.UnmarshalJSON([]byte(`"` + valueExpected1 + `"`))
 	assert.Nil(t, err2)
 	assert.True(t, opString.IsPresnt())
 	valueGot1, _ := opString.ValueGet()
 	assert.Equal(t, valueGot1, valueExpected1)
 
-	valueExpected2 := "megastring-2"
+	valueExpected2 := "megastring-123"
 	err3 := opString.UnmarshalJSON([]byte(`"` + valueExpected2 + `"`))
 	assert.Nil(t, err3)
 	assert.True(t, opString.IsPresnt())

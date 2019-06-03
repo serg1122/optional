@@ -69,7 +69,7 @@ func TestOptionalString_UnmarshalJSON(t *testing.T) {
 	assert.Nil(t, err2)
 	assert.False(t, opString.IsPresnt())
 
-	valueExpected := "blah"
+	valueExpected := "Наш президент - вор"
 	err3 := opString.UnmarshalJSON([]byte(`"` + valueExpected + `"`))
 	assert.Nil(t, err3)
 	valueGot1, valueGotErr1 := opString.ValueGet()
