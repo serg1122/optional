@@ -18,11 +18,11 @@ func OptionalStringCreate() *OptionalString {
 	}
 }
 
-func (o *OptionalString) IsPresnt() bool {
+func (o OptionalString) IsPresnt() bool {
 	return o.isPresent
 }
 
-func (o *OptionalString) ValueGet() (string, *optional.ErrorValueIsNotPresent) {
+func (o OptionalString) ValueGet() (string, *optional.ErrorValueIsNotPresent) {
 	if o.IsPresnt() {
 		return o.value, nil
 	}
@@ -34,7 +34,7 @@ func (o *OptionalString) ValueSet(value string) {
 	o.isPresent = true
 }
 
-func (o *OptionalString) MarshalJSON() ([]byte, error) {
+func (o OptionalString) MarshalJSON() ([]byte, error) {
 	if o.IsPresnt() {
 		return json.Marshal(o.value)
 	}

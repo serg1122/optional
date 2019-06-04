@@ -18,11 +18,11 @@ func OptionalInt16Create() *OptionalInt16 {
 	}
 }
 
-func (o *OptionalInt16) IsPresent() bool {
+func (o OptionalInt16) IsPresent() bool {
 	return o.isPresent
 }
 
-func (o *OptionalInt16) ValueGet() (int16, *optional.ErrorValueIsNotPresent) {
+func (o OptionalInt16) ValueGet() (int16, *optional.ErrorValueIsNotPresent) {
 	if o.IsPresent() {
 		return o.value, nil
 	}
@@ -34,7 +34,7 @@ func (o *OptionalInt16) ValueSet(value int16) {
 	o.isPresent = true
 }
 
-func (o *OptionalInt16) MarshalJSON() ([]byte, error) {
+func (o OptionalInt16) MarshalJSON() ([]byte, error) {
 	if o.IsPresent() {
 		return json.Marshal(o.value)
 	}

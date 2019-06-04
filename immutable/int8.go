@@ -18,7 +18,7 @@ func OptionalInt8Create() *OptionalInt8 {
 	}
 }
 
-func (o *OptionalInt8) IsPresent() bool {
+func (o OptionalInt8) IsPresent() bool {
 	return o.isPresent
 }
 

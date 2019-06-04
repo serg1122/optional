@@ -18,7 +18,7 @@ func OptionalInt8Create() *OptionalInt8 {
 	}
 }
 
-func (o *OptionalInt8) IsPresent() bool {
+func (o OptionalInt8) IsPresent() bool {
 	return o.isPresent
 }
 
@@ -34,7 +34,7 @@ func (o *OptionalInt8) ValueSet(value int8) {
 	o.isPresent = true
 }
 
-func (o *OptionalInt8) MarshalJSON() ([]byte, error) {
+func (o OptionalInt8) MarshalJSON() ([]byte, error) {
 	if o.IsPresent() {
 		return json.Marshal(o.value)
 	}

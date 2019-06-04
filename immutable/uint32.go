@@ -18,11 +18,11 @@ func OptionalUint32Create() *OptionalUint32 {
 	}
 }
 
-func (o *OptionalUint32) IsPresent() bool {
+func (o OptionalUint32) IsPresent() bool {
 	return o.isPresent
 }
 
-func (o *OptionalUint32) ValueGet() (uint32, *optional.ErrorValueIsNotPresent) {
+func (o OptionalUint32) ValueGet() (uint32, *optional.ErrorValueIsNotPresent) {
 	if o.IsPresent() {
 		return o.value, nil
 	}
@@ -38,7 +38,7 @@ func (o *OptionalUint32) ValueSet(value uint32) *optional.ErrorValueIsPresent {
 	return nil
 }
 
-func (o *OptionalUint32) MarshalJSON() ([]byte, error) {
+func (o OptionalUint32) MarshalJSON() ([]byte, error) {
 	if o.IsPresent() {
 		return json.Marshal(o.value)
 	}

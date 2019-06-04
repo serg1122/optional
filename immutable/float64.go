@@ -18,11 +18,11 @@ func OptionalFloat64Create() *OptionalFloat64 {
 	}
 }
 
-func (o *OptionalFloat64) IsPresent() bool {
+func (o OptionalFloat64) IsPresent() bool {
 	return o.isPresent
 }
 
-func (o *OptionalFloat64) ValueGet() (float64, *optional.ErrorValueIsNotPresent) {
+func (o OptionalFloat64) ValueGet() (float64, *optional.ErrorValueIsNotPresent) {
 	if o.IsPresent() {
 		return o.value, nil
 	}
@@ -38,7 +38,7 @@ func (o *OptionalFloat64) ValueSet(value float64) *optional.ErrorValueIsPresent 
 	return nil
 }
 
-func (o *OptionalFloat64) MarshalJSON() ([]byte, error) {
+func (o OptionalFloat64) MarshalJSON() ([]byte, error) {
 	if o.IsPresent() {
 		return json.Marshal(o.value)
 	}
