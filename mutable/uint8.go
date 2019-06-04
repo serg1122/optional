@@ -1,6 +1,7 @@
 package mutable
 
 import (
+	"bytes"
 	"encoding/json"
 
 	"github.com/serg1122/optional"
@@ -41,7 +42,7 @@ func (o *OptionalUint8) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OptionalUint8) UnmarshalJSON(data []byte) error {
-	if string(data) == "null" {
+	if bytes.Equal(data, []byte("null")) {
 		return nil
 	}
 	var value uint8
