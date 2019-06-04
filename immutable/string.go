@@ -17,19 +17,19 @@ func OptionalStringCreate() *OptionalString {
 	}
 }
 
-func (o *OptionalString) IsPresnt() bool {
+func (o *OptionalString) IsPresent() bool {
 	return o.isPresent
 }
 
 func (o *OptionalString) ValueGet() (string, *optional.ErrorValueIsNotPresent) {
-	if o.IsPresnt() {
+	if o.IsPresent() {
 		return o.value, nil
 	}
 	return "", optional.ErrorValueIsNotPresentCreate()
 }
 
 func (o *OptionalString) ValueSet(value string) *optional.ErrorValueIsPresent {
-	if o.IsPresnt() {
+	if o.IsPresent() {
 		return optional.ErrorValueIsPresentCreate()
 	}
 	o.value = value
@@ -38,14 +38,14 @@ func (o *OptionalString) ValueSet(value string) *optional.ErrorValueIsPresent {
 }
 
 func (o *OptionalString) MarshalJSON() ([]byte, error) {
-	if o.IsPresnt() {
+	if o.IsPresent() {
 		return json.Marshal(o.value)
 	}
 	return json.Marshal(nil)
 }
 
 func (o *OptionalString) UnmarshalJSON(data []byte) error {
-	if o.IsPresnt() {
+	if o.IsPresent() {
 		return optional.ErrorValueIsPresentCreate()
 	}
 	if string(data) == "null" {

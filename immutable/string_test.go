@@ -15,9 +15,9 @@ func TestOptionalString_Create(t *testing.T) {
 
 func TestOptionalString_IsPresent(t *testing.T) {
 	opStr := OptionalStringCreate()
-	assert.False(t, opStr.IsPresnt())
+	assert.False(t, opStr.IsPresent())
 	opStr.ValueSet("asd")
-	assert.True(t, opStr.IsPresnt())
+	assert.True(t, opStr.IsPresent())
 }
 
 func TestOptionalString_ValueGet(t *testing.T) {
@@ -63,11 +63,11 @@ func TestOptionalString_UnmarshalJSON(t *testing.T) {
 
 	err1 := opString.UnmarshalJSON([]byte("false"))
 	assert.IsType(t, err1, &json.UnmarshalTypeError{})
-	assert.False(t, opString.IsPresnt())
+	assert.False(t, opString.IsPresent())
 
 	err2 := opString.UnmarshalJSON([]byte("null"))
 	assert.Nil(t, err2)
-	assert.False(t, opString.IsPresnt())
+	assert.False(t, opString.IsPresent())
 
 	valueExpected := "Наш президент - вор"
 	err3 := opString.UnmarshalJSON([]byte(`"` + valueExpected + `"`))
