@@ -8,6 +8,8 @@ import (
 )
 
 type OptionalString struct {
+	optional.IOptional
+
 	isPresent bool
 	value     string
 }
