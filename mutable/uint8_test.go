@@ -8,61 +8,61 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestOptionalUint8_Create(t *testing.T) {
-	opUint8 := OptionalUint8Create()
+func TestCreateOptionalUint8_(t *testing.T) {
+	opUint8 := CreateOptionalUint8()
 	assert.IsType(t, opUint8, &OptionalUint8{})
 }
 
 func TestOptionalUint8_IsPresent(t *testing.T) {
-	opUint8 := OptionalUint8Create()
+	opUint8 := CreateOptionalUint8()
 	assert.False(t, opUint8.IsPresent())
-	opUint8.ValueSet(uint8(1))
+	opUint8.SetValue(uint8(1))
 	assert.True(t, opUint8.IsPresent())
 }
 
 func TestOptionalUint8_GetValue(t *testing.T) {
 
-	opUint8 := OptionalUint8Create()
+	opUint8 := CreateOptionalUint8()
 
 	_, err1 := opUint8.GetValue()
-	assert.IsType(t, err1, optional.ErrorValueIsNotPresentCreate())
+	assert.IsType(t, err1, optional.CreateErrorValueIsNotPresent())
 
 	valueExpected := uint8(2)
-	opUint8.ValueSet(valueExpected)
+	opUint8.SetValue(valueExpected)
 	valueGot, err2 := opUint8.GetValue()
 	assert.Equal(t, valueGot, valueExpected)
 	assert.Nil(t, err2)
 }
 
-func TestOptionalUint8_ValueSet(t *testing.T) {
-	opUint8 := OptionalUint8Create()
+func TestOptionalUint8_SetValue(t *testing.T) {
+	opUint8 := CreateOptionalUint8()
 
 	valueExpected := uint8(3)
-	opUint8.ValueSet(valueExpected)
+	opUint8.SetValue(valueExpected)
 	valueGot1, _ := opUint8.GetValue()
 	assert.Equal(t, valueGot1, valueExpected)
 
 	valueExpected2 := uint8(4)
-	opUint8.ValueSet(valueExpected2)
+	opUint8.SetValue(valueExpected2)
 	valueGot2, _ := opUint8.GetValue()
 	assert.Equal(t, valueGot2, valueExpected2)
 }
 
 func TestOptionalUint8_MarshalJSON(t *testing.T) {
-	opUint8 := OptionalUint8Create()
+	opUint8 := CreateOptionalUint8()
 
 	bytesGot1, errGot1 := opUint8.MarshalJSON()
 	assert.Equal(t, bytesGot1, []byte("null"))
 	assert.Nil(t, errGot1)
 
-	opUint8.ValueSet(uint8(6))
+	opUint8.SetValue(uint8(6))
 	bytesGot2, errGot2 := opUint8.MarshalJSON()
 	assert.Equal(t, bytesGot2, []byte("6"))
 	assert.Nil(t, errGot2)
 }
 
 func TestOptinalUint8_UnmarshalJSON(t *testing.T) {
-	opUint8 := OptionalUint8Create()
+	opUint8 := CreateOptionalUint8()
 
 	err1 := opUint8.UnmarshalJSON([]byte("asd"))
 	assert.False(t, opUint8.IsPresent())

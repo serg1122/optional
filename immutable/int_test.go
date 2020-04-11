@@ -8,55 +8,55 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestOptionalInt_Create(t *testing.T) {
-	opInt := OptionalIntCreate()
+func TestCreateOptionalInt_(t *testing.T) {
+	opInt := CreateOptionalInt()
 	assert.IsType(t, opInt, &OptionalInt{})
 }
 
 func TestOptionalInt_IsPresent(t *testing.T) {
-	opInt := OptionalIntCreate()
+	opInt := CreateOptionalInt()
 	assert.False(t, opInt.IsPresent())
-	opInt.ValueSet(123)
+	opInt.SetValue(123)
 	assert.True(t, opInt.IsPresent())
 }
 
 func TestOptionalInt_GetValue(t *testing.T) {
 	valueExpected := 345
-	opInt := OptionalIntCreate()
+	opInt := CreateOptionalInt()
 	_, err1 := opInt.GetValue()
-	assert.IsType(t, err1, optional.ErrorValueIsNotPresentCreate())
-	opInt.ValueSet(valueExpected)
+	assert.IsType(t, err1, optional.CreateErrorValueIsNotPresent())
+	opInt.SetValue(valueExpected)
 	valueGot, err2 := opInt.GetValue()
 	assert.Equal(t, valueGot, valueExpected)
 	assert.Nil(t, err2)
 }
 
-func TestOptinoalInt_ValueSet(t *testing.T) {
+func TestOptinoalInt_SetValue(t *testing.T) {
 	valueExpected := 567
-	opInt := OptionalIntCreate()
-	err1 := opInt.ValueSet(valueExpected)
+	opInt := CreateOptionalInt()
+	err1 := opInt.SetValue(valueExpected)
 	assert.Nil(t, err1)
 	valueGot, _ := opInt.GetValue()
 	assert.Equal(t, valueGot, valueExpected)
-	err3 := opInt.ValueSet(789)
-	assert.IsType(t, err3, optional.ErrorValueIsPresentCreate())
+	err3 := opInt.SetValue(789)
+	assert.IsType(t, err3, optional.CreateErrorValueIsPresent())
 }
 
 func TestOptinalInt_MarshalJSON(t *testing.T) {
-	opInt := OptionalIntCreate()
+	opInt := CreateOptionalInt()
 
 	valueGot1, err1 := opInt.MarshalJSON()
 	assert.Equal(t, []byte("null"), valueGot1)
 	assert.Nil(t, err1)
 
-	opInt.ValueSet(int(5))
+	opInt.SetValue(int(5))
 	valueGot2, err2 := opInt.MarshalJSON()
 	assert.Equal(t, valueGot2, []byte("5"))
 	assert.Nil(t, err2)
 }
 
 func TestOptionalInt_UnmarshalJSON(t *testing.T) {
-	opInt := OptionalIntCreate()
+	opInt := CreateOptionalInt()
 
 	err1 := opInt.UnmarshalJSON([]byte("qwe"))
 	assert.IsType(t, err1, &json.SyntaxError{})
@@ -76,6 +76,6 @@ func TestOptionalInt_UnmarshalJSON(t *testing.T) {
 
 	err4 := opInt.UnmarshalJSON([]byte("6"))
 	valueGot2, _ := opInt.GetValue()
-	assert.Equal(t, err4, optional.ErrorValueIsPresentCreate())
+	assert.Equal(t, err4, optional.CreateErrorValueIsPresent())
 	assert.Equal(t, valueGot2, valueExpected)
 }

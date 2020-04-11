@@ -12,7 +12,7 @@ type OptionalFloat32 struct {
 	value     float32
 }
 
-func OptionalFloat32Create() *OptionalFloat32 {
+func CreateOptionalFloat32() *OptionalFloat32 {
 	return &OptionalFloat32{
 		isPresent: false,
 	}
@@ -26,10 +26,10 @@ func (o OptionalFloat32) GetValue() (float32, *optional.ErrorValueIsNotPresent) 
 	if o.IsPresent() {
 		return o.value, nil
 	}
-	return 0.0, optional.ErrorValueIsNotPresentCreate()
+	return 0.0, optional.CreateErrorValueIsNotPresent()
 }
 
-func (o *OptionalFloat32) ValueSet(value float32) {
+func (o *OptionalFloat32) SetValue(value float32) {
 	o.value = value
 	o.isPresent = true
 }
@@ -49,6 +49,6 @@ func (o *OptionalFloat32) UnmarshalJSON(data []byte) error {
 	if err1 := json.Unmarshal(data, &value); err1 != nil {
 		return err1
 	}
-	o.ValueSet(value)
+	o.SetValue(value)
 	return nil
 }

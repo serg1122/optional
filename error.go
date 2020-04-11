@@ -8,7 +8,7 @@ type ErrorValueIsNotPresent struct {
 	message string
 }
 
-func ErrorValueIsNotPresentCreate() *ErrorValueIsNotPresent {
+func CreateErrorValueIsNotPresent() *ErrorValueIsNotPresent {
 	return &ErrorValueIsNotPresent{
 		message: ErrorValueIsNotPresentMessage,
 	}
@@ -23,7 +23,7 @@ type ErrorValueIsPresent struct {
 	message string
 }
 
-func ErrorValueIsPresentCreate() *ErrorValueIsPresent {
+func CreateErrorValueIsPresent() *ErrorValueIsPresent {
 	return &ErrorValueIsPresent{
 		message: ErrorValueIsPresentMessage,
 	}

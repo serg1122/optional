@@ -12,7 +12,7 @@ type OptionalUint8 struct {
 	value     uint8
 }
 
-func OptionalUint8Create() *OptionalUint8 {
+func CreateOptionalUint8() *OptionalUint8 {
 	return &OptionalUint8{
 		isPresent: false,
 	}
@@ -26,12 +26,12 @@ func (o OptionalUint8) GetValue() (uint8, *optional.ErrorValueIsNotPresent) {
 	if o.IsPresent() {
 		return o.value, nil
 	}
-	return uint8(0), optional.ErrorValueIsNotPresentCreate()
+	return uint8(0), optional.CreateErrorValueIsNotPresent()
 }
 
-func (o *OptionalUint8) ValueSet(value uint8) *optional.ErrorValueIsPresent {
+func (o *OptionalUint8) SetValue(value uint8) *optional.ErrorValueIsPresent {
 	if o.IsPresent() {
-		return optional.ErrorValueIsPresentCreate()
+		return optional.CreateErrorValueIsPresent()
 	}
 	o.value = value
 	o.isPresent = true
@@ -47,7 +47,7 @@ func (o OptionalUint8) MarshalJSON() ([]byte, error) {
 
 func (o *OptionalUint8) UnmarshalJSON(data []byte) error {
 	if o.IsPresent() {
-		return optional.ErrorValueIsPresentCreate()
+		return optional.CreateErrorValueIsPresent()
 	}
 	if bytes.Equal(data, []byte("null")) {
 		return nil
@@ -56,7 +56,7 @@ func (o *OptionalUint8) UnmarshalJSON(data []byte) error {
 	if err1 := json.Unmarshal(data, &value); err1 != nil {
 		return err1
 	}
-	if err2 := o.ValueSet(value); err2 != nil {
+	if err2 := o.SetValue(value); err2 != nil {
 		return err2
 	}
 	return nil

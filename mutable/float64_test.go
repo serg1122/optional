@@ -8,57 +8,57 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestOptionalFloat64_Create(t *testing.T) {
-	opFloat64 := OptionalFloat64Create()
+func TestCreateOptionalFloat64_(t *testing.T) {
+	opFloat64 := CreateOptionalFloat64()
 	assert.IsType(t, opFloat64, &OptionalFloat64{})
 }
 
 func TestOptionalFloat64_IsPresent(t *testing.T) {
-	opFloat64 := OptionalFloat64Create()
+	opFloat64 := CreateOptionalFloat64()
 	assert.False(t, opFloat64.IsPresent())
-	opFloat64.ValueSet(0.12)
+	opFloat64.SetValue(0.12)
 	assert.True(t, opFloat64.IsPresent())
 }
 
 func TestOptionalFloat64_GetValue(t *testing.T) {
 	valueExpected := 1.1
-	opFloat64 := OptionalFloat64Create()
+	opFloat64 := CreateOptionalFloat64()
 	_, err1 := opFloat64.GetValue()
-	assert.IsType(t, err1, optional.ErrorValueIsNotPresentCreate())
-	opFloat64.ValueSet(valueExpected)
+	assert.IsType(t, err1, optional.CreateErrorValueIsNotPresent())
+	opFloat64.SetValue(valueExpected)
 	valueGot, err2 := opFloat64.GetValue()
 	assert.Equal(t, valueGot, valueExpected)
 	assert.Nil(t, err2)
 }
 
-func TestOptionalFloat64_ValueSet(t *testing.T) {
+func TestOptionalFloat64_SetValue(t *testing.T) {
 	valueExpected := float64(2.3)
-	opFloat64 := OptionalFloat64Create()
-	opFloat64.ValueSet(valueExpected)
+	opFloat64 := CreateOptionalFloat64()
+	opFloat64.SetValue(valueExpected)
 	valueGot, err2 := opFloat64.GetValue()
 	assert.Equal(t, valueGot, valueExpected)
 	assert.Nil(t, err2)
 	valueExpected2 := float64(3.1)
-	opFloat64.ValueSet(valueExpected2)
+	opFloat64.SetValue(valueExpected2)
 	valueGot2, _ := opFloat64.GetValue()
 	assert.Equal(t, valueGot2, valueExpected2)
 }
 
 func TestOptionalFloat64_MarshalJSON(t *testing.T) {
-	opFloat64 := OptionalFloat64Create()
+	opFloat64 := CreateOptionalFloat64()
 
 	jsonValueGot1, jsonValueErr1 := opFloat64.MarshalJSON()
 	assert.Equal(t, jsonValueGot1, []byte("null"))
 	assert.Nil(t, jsonValueErr1)
 
-	opFloat64.ValueSet(float64(6.12))
+	opFloat64.SetValue(float64(6.12))
 	jsonValueGot2, jsonValueErr2 := opFloat64.MarshalJSON()
 	assert.Equal(t, jsonValueGot2, []byte("6.12"))
 	assert.Nil(t, jsonValueErr2)
 }
 
 func TestOptionalFloat64_UnmarshalJSON(t *testing.T) {
-	opFloat64 := OptionalFloat64Create()
+	opFloat64 := CreateOptionalFloat64()
 
 	err1 := opFloat64.UnmarshalJSON([]byte("asd"))
 	assert.IsType(t, err1, &json.SyntaxError{})

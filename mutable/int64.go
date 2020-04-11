@@ -12,7 +12,7 @@ type OptionalInt64 struct {
 	value     int64
 }
 
-func OptionalInt64Create() *OptionalInt64 {
+func CreateOptionalInt64() *OptionalInt64 {
 	return &OptionalInt64{
 		isPresent: false,
 	}
@@ -26,10 +26,10 @@ func (o OptionalInt64) GetValue() (int64, *optional.ErrorValueIsNotPresent) {
 	if o.IsPresent() {
 		return o.value, nil
 	}
-	return 0, optional.ErrorValueIsNotPresentCreate()
+	return 0, optional.CreateErrorValueIsNotPresent()
 }
 
-func (o *OptionalInt64) ValueSet(value int64) {
+func (o *OptionalInt64) SetValue(value int64) {
 	o.value = value
 	o.isPresent = true
 }
@@ -49,6 +49,6 @@ func (o *OptionalInt64) UnmarshalJSON(data []byte) error {
 	if err1 := json.Unmarshal(data, &value); err1 != nil {
 		return err1
 	}
-	o.ValueSet(value)
+	o.SetValue(value)
 	return nil
 }

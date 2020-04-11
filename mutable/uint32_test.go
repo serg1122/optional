@@ -8,60 +8,60 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestOptionalUint32_Create(t *testing.T) {
-	opUint32 := OptionalUint32Create()
+func TestCreateOptionalUint32_(t *testing.T) {
+	opUint32 := CreateOptionalUint32()
 	assert.IsType(t, opUint32, &OptionalUint32{})
 }
 
 func TestOptionalUint32_IsPresent(t *testing.T) {
-	opUint32 := OptionalUint32Create()
+	opUint32 := CreateOptionalUint32()
 	assert.False(t, opUint32.IsPresent())
-	opUint32.ValueSet(uint32(1))
+	opUint32.SetValue(uint32(1))
 	assert.True(t, opUint32.IsPresent())
 }
 
 func TestOptionalUint32_GetValue(t *testing.T) {
-	opUint32 := OptionalUint32Create()
+	opUint32 := CreateOptionalUint32()
 
 	_, err1 := opUint32.GetValue()
-	assert.IsType(t, err1, optional.ErrorValueIsNotPresentCreate())
+	assert.IsType(t, err1, optional.CreateErrorValueIsNotPresent())
 
 	valueExpected := uint32(2)
-	opUint32.ValueSet(valueExpected)
+	opUint32.SetValue(valueExpected)
 	valueGot, err2 := opUint32.GetValue()
 	assert.Equal(t, valueGot, valueExpected)
 	assert.Nil(t, err2)
 }
 
-func TestOptionalUint32_ValueSet(t *testing.T) {
-	opUint32 := OptionalUint32Create()
+func TestOptionalUint32_SetValue(t *testing.T) {
+	opUint32 := CreateOptionalUint32()
 
 	valueExpected := uint32(3)
-	opUint32.ValueSet(valueExpected)
+	opUint32.SetValue(valueExpected)
 	valueGot1, _ := opUint32.GetValue()
 	assert.Equal(t, valueGot1, valueExpected)
 
 	valueExpected2 := uint32(4)
-	opUint32.ValueSet(valueExpected2)
+	opUint32.SetValue(valueExpected2)
 	valueGot2, _ := opUint32.GetValue()
 	assert.Equal(t, valueGot2, valueExpected2)
 }
 
 func TestOptionalUint32_MarshalJSON(t *testing.T) {
-	opUint32 := OptionalUint32Create()
+	opUint32 := CreateOptionalUint32()
 
 	bytesGot1, errGot1 := opUint32.MarshalJSON()
 	assert.Equal(t, bytesGot1, []byte("null"))
 	assert.Nil(t, errGot1)
 
-	opUint32.ValueSet(uint32(6))
+	opUint32.SetValue(uint32(6))
 	bytesGot2, errGot2 := opUint32.MarshalJSON()
 	assert.Equal(t, bytesGot2, []byte("6"))
 	assert.Nil(t, errGot2)
 }
 
 func TestOptinalUint32_UnmarshalJSON(t *testing.T) {
-	opUint32 := OptionalUint32Create()
+	opUint32 := CreateOptionalUint32()
 
 	err1 := opUint32.UnmarshalJSON([]byte("asd"))
 	assert.False(t, opUint32.IsPresent())

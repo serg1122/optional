@@ -8,57 +8,57 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestOptionalUint_Create(t *testing.T) {
-	opUint := OptionalUintCreate()
+func TestCreateOptionalUint_(t *testing.T) {
+	opUint := CreateOptionalUint()
 	assert.IsType(t, opUint, &OptionalUint{})
 }
 
 func TestOptionalUint_IsPresent(t *testing.T) {
-	opUint := OptionalUintCreate()
+	opUint := CreateOptionalUint()
 	assert.False(t, opUint.IsPresent())
-	opUint.ValueSet(uint(1))
+	opUint.SetValue(uint(1))
 	assert.True(t, opUint.IsPresent())
 }
 
 func (o *OptionalUint) TestOptionalUint_GetValue(t *testing.T) {
 	valueExpected := uint(2)
-	opUint := OptionalUintCreate()
+	opUint := CreateOptionalUint()
 	_, err1 := opUint.GetValue()
-	assert.IsType(t, err1, optional.ErrorValueIsNotPresentCreate())
-	opUint.ValueSet(valueExpected)
+	assert.IsType(t, err1, optional.CreateErrorValueIsNotPresent())
+	opUint.SetValue(valueExpected)
 	valueGot, err2 := opUint.GetValue()
 	assert.Equal(t, valueGot, valueExpected)
 	assert.Nil(t, err2)
 }
 
-func TestOptionalUint_ValueSet(t *testing.T) {
-	opUint := OptionalUintCreate()
+func TestOptionalUint_SetValue(t *testing.T) {
+	opUint := CreateOptionalUint()
 	valueExpected := uint(3)
-	err1 := opUint.ValueSet(valueExpected)
+	err1 := opUint.SetValue(valueExpected)
 	assert.Nil(t, err1)
 	valueGot1, _ := opUint.GetValue()
 	assert.Equal(t, valueGot1, valueExpected)
-	err2 := opUint.ValueSet(uint(4))
-	assert.IsType(t, err2, optional.ErrorValueIsPresentCreate())
+	err2 := opUint.SetValue(uint(4))
+	assert.IsType(t, err2, optional.CreateErrorValueIsPresent())
 	valueGot2, _ := opUint.GetValue()
 	assert.Equal(t, valueGot2, valueExpected)
 }
 
 func TestOptinalUint_MarshalJSON(t *testing.T) {
-	opUint := OptionalUintCreate()
+	opUint := CreateOptionalUint()
 
 	valueGot1, err1 := opUint.MarshalJSON()
 	assert.Equal(t, []byte("null"), valueGot1)
 	assert.Nil(t, err1)
 
-	opUint.ValueSet(uint(5))
+	opUint.SetValue(uint(5))
 	valueGot2, err2 := opUint.MarshalJSON()
 	assert.Equal(t, valueGot2, []byte("5"))
 	assert.Nil(t, err2)
 }
 
 func TestOptionalUint_UnmarshalJSON(t *testing.T) {
-	opUint := OptionalUintCreate()
+	opUint := CreateOptionalUint()
 
 	err1 := opUint.UnmarshalJSON([]byte("qwe"))
 	assert.IsType(t, err1, &json.SyntaxError{})
@@ -78,6 +78,6 @@ func TestOptionalUint_UnmarshalJSON(t *testing.T) {
 
 	err4 := opUint.UnmarshalJSON([]byte("6"))
 	valueGot2, _ := opUint.GetValue()
-	assert.Equal(t, err4, optional.ErrorValueIsPresentCreate())
+	assert.Equal(t, err4, optional.CreateErrorValueIsPresent())
 	assert.Equal(t, valueGot2, valueExpected)
 }

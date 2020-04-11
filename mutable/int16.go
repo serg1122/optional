@@ -12,7 +12,7 @@ type OptionalInt16 struct {
 	value     int16
 }
 
-func OptionalInt16Create() *OptionalInt16 {
+func CreateOptionalInt16() *OptionalInt16 {
 	return &OptionalInt16{
 		isPresent: false,
 	}
@@ -26,10 +26,10 @@ func (o OptionalInt16) GetValue() (int16, *optional.ErrorValueIsNotPresent) {
 	if o.IsPresent() {
 		return o.value, nil
 	}
-	return int16(0), optional.ErrorValueIsNotPresentCreate()
+	return int16(0), optional.CreateErrorValueIsNotPresent()
 }
 
-func (o *OptionalInt16) ValueSet(value int16) {
+func (o *OptionalInt16) SetValue(value int16) {
 	o.value = value
 	o.isPresent = true
 }
@@ -49,6 +49,6 @@ func (o *OptionalInt16) UnmarshalJSON(data []byte) error {
 	if err1 := json.Unmarshal(data, &value); err1 != nil {
 		return err1
 	}
-	o.ValueSet(value)
+	o.SetValue(value)
 	return nil
 }

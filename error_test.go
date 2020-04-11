@@ -7,13 +7,13 @@ import (
 )
 
 func TestError_ErrorValueIsNotPresent(t *testing.T) {
-	err := ErrorValueIsNotPresentCreate()
+	err := CreateErrorValueIsNotPresent()
 	assert.IsType(t, err, &ErrorValueIsNotPresent{})
 	assert.EqualError(t, err, ErrorValueIsNotPresentMessage)
 }
 
 func TestError_ErrorValueIsPresent(t *testing.T) {
-	err := ErrorValueIsPresentCreate()
+	err := CreateErrorValueIsPresent()
 	assert.IsType(t, err, &ErrorValueIsPresent{})
 	assert.EqualError(t, err, ErrorValueIsPresentMessage)
 }

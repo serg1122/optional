@@ -12,7 +12,7 @@ type OptionalBool struct {
 	value     bool
 }
 
-func OptionalBoolCreate() *OptionalBool {
+func CreateOptionalBool() *OptionalBool {
 	return &OptionalBool{
 		isPresent: false,
 	}
@@ -26,10 +26,10 @@ func (o OptionalBool) GetValue() (bool, *optional.ErrorValueIsNotPresent) {
 	if o.IsPresent() {
 		return o.value, nil
 	}
-	return false, optional.ErrorValueIsNotPresentCreate()
+	return false, optional.CreateErrorValueIsNotPresent()
 }
 
-func (o *OptionalBool) ValueSet(value bool) {
+func (o *OptionalBool) SetValue(value bool) {
 	o.value = value
 	o.isPresent = true
 }
@@ -49,6 +49,6 @@ func (o *OptionalBool) UnmarshalJSON(data []byte) error {
 	if err1 := json.Unmarshal(data, &value); err1 != nil {
 		return err1
 	}
-	o.ValueSet(value)
+	o.SetValue(value)
 	return nil
 }
