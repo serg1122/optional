@@ -19,13 +19,13 @@ func TestOptionalString_IsPresent(t *testing.T) {
 	assert.True(t, opStr.IsPresnt())
 }
 
-func TestOptionalString_ValueGet(t *testing.T) {
-	valueExpected := "ValueGet expected value"
+func TestOptionalString_GetValue(t *testing.T) {
+	valueExpected := "GetValue expected value"
 	opStr := OptionalStringCreate()
-	_, err1 := opStr.ValueGet()
+	_, err1 := opStr.GetValue()
 	assert.IsType(t, err1, optional.ErrorValueIsNotPresentCreate())
 	opStr.ValueSet(valueExpected)
-	valueGot, err2 := opStr.ValueGet()
+	valueGot, err2 := opStr.GetValue()
 	assert.Equal(t, valueGot, valueExpected)
 	assert.Nil(t, err2)
 }
@@ -34,11 +34,11 @@ func TestOptionalString_ValueSet(t *testing.T) {
 	valueExpected := "ValueSet expected value"
 	opStr := OptionalStringCreate()
 	opStr.ValueSet(valueExpected)
-	valueGot1, _ := opStr.ValueGet()
+	valueGot1, _ := opStr.GetValue()
 	assert.Equal(t, valueGot1, valueExpected)
 	valueExpected2 := "asd"
 	opStr.ValueSet(valueExpected2)
-	valueGot2, _ := opStr.ValueGet()
+	valueGot2, _ := opStr.GetValue()
 	assert.Equal(t, valueGot2, valueExpected2)
 }
 
@@ -69,13 +69,13 @@ func TestOptionalString_UnmarshalJSON(t *testing.T) {
 	err2 := opString.UnmarshalJSON([]byte(`"` + valueExpected1 + `"`))
 	assert.Nil(t, err2)
 	assert.True(t, opString.IsPresnt())
-	valueGot1, _ := opString.ValueGet()
+	valueGot1, _ := opString.GetValue()
 	assert.Equal(t, valueGot1, valueExpected1)
 
 	valueExpected2 := "megastring-123"
 	err3 := opString.UnmarshalJSON([]byte(`"` + valueExpected2 + `"`))
 	assert.Nil(t, err3)
 	assert.True(t, opString.IsPresnt())
-	valueGot2, _ := opString.ValueGet()
+	valueGot2, _ := opString.GetValue()
 	assert.Equal(t, valueGot2, valueExpected2)
 }

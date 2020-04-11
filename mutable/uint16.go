@@ -22,7 +22,7 @@ func (o OptionalUint16) IsPresent() bool {
 	return o.isPresent
 }
 
-func (o OptionalUint16) ValueGet() (uint16, *optional.ErrorValueIsNotPresent) {
+func (o OptionalUint16) GetValue() (uint16, *optional.ErrorValueIsNotPresent) {
 	if o.IsPresent() {
 		return o.value, nil
 	}

@@ -20,13 +20,13 @@ func TestOptionalBool_IsPresent(t *testing.T) {
 	assert.True(t, opBool.IsPresent())
 }
 
-func TestOptionalBool_ValueGet(t *testing.T) {
+func TestOptionalBool_GetValue(t *testing.T) {
 	valueExpexted := true
 	opBool := OptionalBoolCreate()
-	_, err1 := opBool.ValueGet()
+	_, err1 := opBool.GetValue()
 	assert.IsType(t, err1, optional.ErrorValueIsNotPresentCreate())
 	opBool.ValueSet(valueExpexted)
-	valueGot, err2 := opBool.ValueGet()
+	valueGot, err2 := opBool.GetValue()
 	assert.Equal(t, valueGot, valueExpexted)
 	assert.Nil(t, err2)
 }
@@ -35,12 +35,12 @@ func TestOptinalBool_ValueSet(t *testing.T) {
 	opBool := OptionalBoolCreate()
 	err1 := opBool.ValueSet(true)
 	assert.Nil(t, err1)
-	valueGot, err2 := opBool.ValueGet()
+	valueGot, err2 := opBool.GetValue()
 	assert.True(t, valueGot)
 	assert.Nil(t, err2)
 	err3 := opBool.ValueSet(false)
 	assert.IsType(t, err3, optional.ErrorValueIsPresentCreate())
-	valueGot2, _ := opBool.ValueGet()
+	valueGot2, _ := opBool.GetValue()
 	assert.True(t, valueGot2)
 }
 
@@ -71,7 +71,7 @@ func TestOptionalBool_UnmarshalJSON(t *testing.T) {
 
 	err2 := opBool.UnmarshalJSON([]byte("false"))
 	assert.Nil(t, err2)
-	valueGot, errorGot := opBool.ValueGet()
+	valueGot, errorGot := opBool.GetValue()
 	assert.False(t, valueGot)
 	assert.Nil(t, errorGot)
 

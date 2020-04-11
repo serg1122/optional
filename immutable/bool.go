@@ -22,7 +22,7 @@ func (o OptionalBool) IsPresent() bool {
 	return o.isPresent
 }
 
-func (o OptionalBool) ValueGet() (bool, *optional.ErrorValueIsNotPresent) {
+func (o OptionalBool) GetValue() (bool, *optional.ErrorValueIsNotPresent) {
 	if o.IsPresent() {
 		return o.value, nil
 	}

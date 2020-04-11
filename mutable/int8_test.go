@@ -20,13 +20,13 @@ func TestOptionalInt8_IsPresent(t *testing.T) {
 	assert.True(t, opInt8.IsPresent())
 }
 
-func TestOptionalInt8_ValueGet(t *testing.T) {
+func TestOptionalInt8_GetValue(t *testing.T) {
 	valueExpected := int8(2)
 	opInt8 := OptionalInt8Create()
-	_, err1 := opInt8.ValueGet()
+	_, err1 := opInt8.GetValue()
 	assert.IsType(t, err1, optional.ErrorValueIsNotPresentCreate())
 	opInt8.ValueSet(valueExpected)
-	valueGot, err2 := opInt8.ValueGet()
+	valueGot, err2 := opInt8.GetValue()
 	assert.Equal(t, valueGot, valueExpected)
 	assert.Nil(t, err2)
 }
@@ -35,11 +35,11 @@ func TestOptionalInt8_ValueSet(t *testing.T) {
 	valueExpected := int8(3)
 	opInt8 := OptionalInt8Create()
 	opInt8.ValueSet(valueExpected)
-	valueGot1, _ := opInt8.ValueGet()
+	valueGot1, _ := opInt8.GetValue()
 	assert.Equal(t, valueGot1, valueExpected)
 	valueExpected2 := int8(4)
 	opInt8.ValueSet(valueExpected2)
-	valueGot2, _ := opInt8.ValueGet()
+	valueGot2, _ := opInt8.GetValue()
 	assert.Equal(t, valueGot2, valueExpected2)
 }
 
@@ -70,12 +70,12 @@ func TestOptinalInt8_UnmarshalJSON(t *testing.T) {
 	err3 := opInt8.UnmarshalJSON([]byte("7"))
 	assert.True(t, opInt8.IsPresent())
 	assert.Nil(t, err3)
-	valueGot1, _ := opInt8.ValueGet()
+	valueGot1, _ := opInt8.GetValue()
 	assert.Equal(t, valueGot1, int8(7))
 
 	err4 := opInt8.UnmarshalJSON([]byte("8"))
 	assert.True(t, opInt8.IsPresent())
 	assert.Nil(t, err4)
-	valueGot2, _ := opInt8.ValueGet()
+	valueGot2, _ := opInt8.GetValue()
 	assert.Equal(t, valueGot2, int8(8))
 }

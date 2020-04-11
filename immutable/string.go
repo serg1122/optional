@@ -24,7 +24,7 @@ func (o OptionalString) IsPresent() bool {
 	return o.isPresent
 }
 
-func (o OptionalString) ValueGet() (string, *optional.ErrorValueIsNotPresent) {
+func (o OptionalString) GetValue() (string, *optional.ErrorValueIsNotPresent) {
 	if o.IsPresent() {
 		return o.value, nil
 	}

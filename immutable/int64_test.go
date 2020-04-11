@@ -20,13 +20,13 @@ func TestOptionalInt64_IsPresent(t *testing.T) {
 	assert.True(t, opInt64.IsPresent())
 }
 
-func TestOptionalInt64_ValueGet(t *testing.T) {
+func TestOptionalInt64_GetValue(t *testing.T) {
 	valueExpected := int64(2)
 	opInt64 := OptionalInt64Create()
-	_, err1 := opInt64.ValueGet()
+	_, err1 := opInt64.GetValue()
 	assert.IsType(t, err1, optional.ErrorValueIsNotPresentCreate())
 	opInt64.ValueSet(valueExpected)
-	valueGot, err2 := opInt64.ValueGet()
+	valueGot, err2 := opInt64.GetValue()
 	assert.Equal(t, valueGot, valueExpected)
 	assert.Nil(t, err2)
 }
@@ -36,11 +36,11 @@ func TestOptionalInt64_ValueSet(t *testing.T) {
 	opInt64 := OptionalInt64Create()
 	err1 := opInt64.ValueSet(valueExpected)
 	assert.Nil(t, err1)
-	valueGot1, _ := opInt64.ValueGet()
+	valueGot1, _ := opInt64.GetValue()
 	assert.Equal(t, valueGot1, valueExpected)
 	err2 := opInt64.ValueSet(int64(5))
 	assert.IsType(t, err2, optional.ErrorValueIsPresentCreate())
-	valueGot2, _ := opInt64.ValueGet()
+	valueGot2, _ := opInt64.GetValue()
 	assert.Equal(t, valueGot2, valueExpected)
 }
 
@@ -71,13 +71,13 @@ func TestOptionalInt64_UnmarshalJSON(t *testing.T) {
 	valueExpected := int64(6)
 
 	err3 := opInt64.UnmarshalJSON([]byte("6"))
-	valueGot1, _ := opInt64.ValueGet()
+	valueGot1, _ := opInt64.GetValue()
 	assert.True(t, opInt64.IsPresent())
 	assert.Equal(t, valueGot1, valueExpected)
 	assert.Nil(t, err3)
 
 	err4 := opInt64.UnmarshalJSON([]byte("6"))
-	valueGot2, _ := opInt64.ValueGet()
+	valueGot2, _ := opInt64.GetValue()
 	assert.Equal(t, err4, optional.ErrorValueIsPresentCreate())
 	assert.Equal(t, valueGot2, valueExpected)
 }

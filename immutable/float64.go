@@ -22,7 +22,7 @@ func (o OptionalFloat64) IsPresent() bool {
 	return o.isPresent
 }
 
-func (o OptionalFloat64) ValueGet() (float64, *optional.ErrorValueIsNotPresent) {
+func (o OptionalFloat64) GetValue() (float64, *optional.ErrorValueIsNotPresent) {
 	if o.IsPresent() {
 		return o.value, nil
 	}
